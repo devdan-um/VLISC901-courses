@@ -1,34 +1,79 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-    <title>Registrar Nuevo Curso</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/styles.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Registro de Curso</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-image: url('https://img.local.mx/2018/03/destacada3.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 1em;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <a class="navbar-brand" href="#">Cursos</a>
-</nav>
-<div class="container my-4">
-    <h1 class="my-4">Registrar Nuevo Curso</h1>
-    <form th:action="@{/cursos}" th:object="${courseRequest}" method="post">
+<div class="container">
+    <form th:action="@{/cursos}" th:object="${courseRequest}" method="post" id="courseForm" class="needs-validation" novalidate>
+        <h2>Formulario de Registro de Curso</h2>
         <div class="form-group">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" th:field="*{nombre}" class="form-control" required/>
+            <label for="courseSubject">Materia:</label>
+            <select id="courseSubject" name="nombre" th:field="*{nombre}" class="form-control" required>
+                <option value="">Seleccione una materia</option>
+                <option value="Cálculo">Cálculo</option>
+                <option value="Programación">Programación</option>
+                <option value="Desarrollo">Desarrollo</option>
+                <option value="Legislación">Legislación</option>
+                <option value="Bases de Datos">Bases de Datos</option>
+            </select>
+            <div class="invalid-feedback">Por favor, seleccione una materia.</div>
         </div>
         <div class="form-group">
-            <label for="fechaInicio">Fecha de Inicio:</label>
-            <input type="date" id="fechaInicio" th:field="*{fechaInicio}" class="form-control" required/>
+            <label for="startDate">Fecha de Inicio:</label>
+            <input type="date" id="startDate" th:field="*{fechaInicio}" name="fechaInicio" class="form-control" required>
+            <div class="invalid-feedback">Por favor, introduzca la fecha de inicio.</div>
         </div>
         <div class="form-group">
-            <label for="fechaConclusion">Fecha de Conclusión:</label>
-            <input type="date" id="fechaConclusion" th:field="*{fechaConclusion}" class="form-control" required/>
+            <label for="endDate">Fecha de Conclusión:</label>
+            <input type="date" id="endDate" th:field="*{fechaConclusion}" name="fechaConclusion" class="form-control" required>
+            <div class="invalid-feedback">Por favor, introduzca la fecha de finalización.</div>
         </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <a href="/cursos" class="btn btn-secondary">Volver</a>
-        </div>
+        <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+        <a href="/cursos" class="btn btn-secondary btn-block">Volver</a>
     </form>
+</div>
+
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Registro Exitoso</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¡Has registrado el curso correctamente!
+            </div>
+        </div>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
